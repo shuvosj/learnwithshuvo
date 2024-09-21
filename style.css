@@ -1,0 +1,486 @@
+/* Import Google Font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+
+
+:root {
+  /* Dark mode colors */
+  --text-color: #E3E3E3;
+  --subheading-color: #828282;
+  --placeholder-color: #A6A6A6;
+  --primary-color: #242424;
+  --secondary-color: #383838;
+  --secondary-hover-color: #444;
+}
+
+.light_mode {
+  /* Light mode colors */
+  --text-color: #222;
+  --subheading-color: #A0A0A0;
+  --placeholder-color: #6C6C6C;
+  --primary-color: #FFF;
+  --secondary-color: #E9EEF6;
+  --secondary-hover-color: #DBE1EA;
+}
+
+body {
+  background: var(--primary-color);
+}
+
+
+
+
+
+
+
+
+.header, .chat-list .message, .typing-form {
+  margin: 0 auto;
+  max-width: 980px;
+}
+
+.header {
+  margin-top: 6vh;
+  padding: 1rem;
+  overflow-x: hidden;
+}
+
+body.hide-header .header {
+  margin: 0;
+  display: none;
+}
+
+.header :where(.title, .subtitle) {
+  color: var(--text-color);
+  font-weight: 500;
+  line-height: 4rem;
+}
+
+.header .title {
+  width: fit-content;
+  font-size: 3rem;
+  background-clip: text;
+  background: linear-gradient(to right, #4285f4, #d96570);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header .subtitle {
+  font-size: 2.6rem;
+  color: var(--subheading-color);
+}
+
+.suggestion-list {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 9.5vh;
+  overflow: hidden;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.suggestion-list .suggestion {
+  cursor: pointer;
+  padding: 1.25rem;
+  width: 222px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  border-radius: 0.75rem;
+  justify-content: space-between;
+  background: var(--secondary-color);
+  transition: 0.2s ease;
+}
+
+.suggestion-list .suggestion:hover {
+  background: var(--secondary-hover-color);
+}
+
+.suggestion-list .suggestion :where(.text, .icon) {
+  font-weight: 400;
+  color: var(--text-color);
+}
+
+.suggestion-list .suggestion .icon {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  font-size: 1.3rem;
+  margin-top: 2.5rem;
+  align-self: flex-end;
+  align-items: center;
+  border-radius: 50%;
+  justify-content: center;
+  color: var(--text-color);
+  background: var(--primary-color);
+}
+
+.chat-list {
+  padding: 2rem 1rem 12rem;
+  max-height: 100vh;
+  overflow-y: auto;
+  scrollbar-color: #999 transparent;
+}
+
+.chat-list .message.incoming {
+  margin-top: 1.5rem;
+}
+
+.chat-list .message .message-content {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+  align-items: center;
+}
+
+.chat-list .message .text {
+  color: var(--text-color);
+  white-space: pre-wrap;
+}
+
+.chat-list .message.error .text {
+  color: #e55865;
+}
+
+.chat-list .message.loading .text {
+  display: none;
+}
+
+.chat-list .message .avatar {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  align-self: flex-start;
+}
+
+.chat-list .message.loading .avatar {
+  animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.chat-list .message .icon {
+  color: var(--text-color);
+  cursor: pointer;
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  font-size: 1.25rem;
+  margin-left: 3.5rem;
+  visibility: hidden;
+}
+
+.chat-list .message .icon.hide {
+  visibility: hidden;
+}
+
+.chat-list .message:not(.loading, .error):hover .icon:not(.hide){
+  visibility: visible;
+}
+
+.chat-list .message .icon:hover {
+  background: var(--secondary-hover-color);
+}
+
+.chat-list .message .loading-indicator {
+  display: none;
+  gap: 0.8rem;
+  width: 100%;
+  flex-direction: column;
+}
+
+.chat-list .message.loading .loading-indicator {
+  display: flex;
+}
+
+.chat-list .message .loading-indicator .loading-bar {
+  height: 11px;
+  width: 100%;
+  border-radius: 0.135rem;
+  background-position: -800px 0;
+  background: linear-gradient(to right, #4285f4, var(--primary-color), #4285f4);
+  animation: loading 3s linear infinite;
+}
+
+.chat-list .message .loading-indicator .loading-bar:last-child {
+  width: 70%;
+}
+
+@keyframes loading {
+  0% {
+    background-position: -800px 0;
+  }
+
+  100% {
+    background-position: 800px 0;
+  }
+}
+
+.typing-area {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  padding: 1rem;
+  background: var(--primary-color);
+}
+
+.typing-area :where(.typing-form, .action-buttons) {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.typing-form .input-wrapper {
+  width: 100%;
+  height: 56px;
+  display: flex;
+  position: relative;
+}
+
+.typing-form .typing-input {
+  height: 100%;
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 1rem;
+  color: var(--text-color);
+  padding: 1.1rem 4rem 1.1rem 1.5rem;
+  border-radius: 100px;
+  background: var(--secondary-color);
+}
+
+.typing-form .typing-input:focus {
+  background: var(--secondary-hover-color);
+}
+
+.typing-form .typing-input::placeholder {
+  color: var(--placeholder-color);
+}
+
+.typing-area .icon {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  font-size: 1.4rem;
+  color: var(--text-color);
+  align-items: center;
+  justify-content: center;
+  background: var(--secondary-color);
+  transition: 0.2s ease;
+}
+
+.typing-area .icon:hover {
+  background: var(--secondary-hover-color);
+}
+
+.typing-form #send-message-button {
+  position: absolute;
+  right: 0;
+  outline: none;
+  border: none;
+  transform: scale(0);
+  background: transparent;
+  transition: transform 0.2s ease;
+}
+
+.typing-form .typing-input:valid ~ #send-message-button {
+  transform: scale(1);
+}
+
+.typing-area .disclaimer-text {
+  text-align: center;
+  font-size: 0.85rem;
+  margin-top: 1rem;
+  color: var(--placeholder-color);
+}
+
+/* Responsive media query code for small screen */
+@media (max-width: 768px) {
+  .header :is(.title, .subtitle) {
+    font-size: 2rem;
+    line-height: 2.6rem;
+  }
+
+  .header .subtitle {
+    font-size: 1.7rem;
+  }
+
+  .typing-area :where(.typing-form, .action-buttons) {
+    gap: 0.4rem;
+  }
+
+  .typing-form .input-wrapper {
+    height: 50px;
+  }
+
+  .typing-form .typing-input {
+    padding: 1.1rem 3.5rem 1.1rem 1.2rem;
+  }
+
+  .typing-area .icon {
+    height: 50px;
+    width: 50px;
+  }
+
+  .typing-area .disclaimer-text {
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  
+}
+
+.container-preloader {
+	align-items:center; cursor:none; display:flex; height:100%;
+  justify-content:center; position:fixed; left:0; top:0; width:100%; z-index:900;
+}
+.container-preloader .animation-preloader {
+	position:absolute; z-index: 100;}
+/* Spinner Loading */
+.container-preloader .animation-preloader .spinner {
+  animation: spinner 1s infinite linear;
+	border-radius: 50%;  border: 10px solid rgba(0, 0, 0, 0.2);
+  border-top-color: green; /* It is not in alphabetical order so that you do not overwrite it */
+  height: 9em;  margin: 0 auto 3.5em auto; width: 9em;
+}
+/* Loading text */
+.container-preloader .animation-preloader .txt-loading {
+  font: bold 5em 'Montserrat', sans-serif;
+	text-align: center;	user-select: none;
+}
+.container-preloader .animation-preloader .txt-loading .characters:before {
+  animation: characters 4s infinite;  color: orange;
+  content: attr(preloader-text);  left: 0;
+  opacity: 0;  position: absolute;  top: 0;
+  transform: rotateY(-90deg);
+}
+.container-preloader .animation-preloader .txt-loading .characters {
+	color: rgba(0, 0, 0, 0.2);	position: relative;
+}
+.container-preloader .animation-preloader .txt-loading .characters:nth-child(2):before {
+  animation-delay: 0.2s;
+}
+.container-preloader .animation-preloader .txt-loading .characters:nth-child(3):before {
+  animation-delay: 0.4s;
+}
+.container-preloader .animation-preloader .txt-loading .characters:nth-child(4):before {
+  animation-delay: 0.6s;
+}
+.container-preloader .animation-preloader .txt-loading .characters:nth-child(5):before {
+  animation-delay: 0.8s;
+}
+.container-preloader .animation-preloader .txt-loading .characters:nth-child(6):before {
+  animation-delay: 1s;
+}
+.container-preloader .animation-preloader .txt-loading .characters:nth-child(7):before {
+  animation-delay: 1.2s;
+}
+.container-preloader .loader-section {
+  background-color: #ffffff;  height: 100%;
+  position: fixed;  top: 0;  width: calc(50% + 1px);
+}
+.container-preloader .loader-section.section-left {
+  left: 0;
+}
+.container-preloader .loader-section.section-right {
+  right: 0;
+}
+/* Fade effect on loading animation */
+.loaded .animation-preloader {
+  opacity: 0;
+  transition: 0.3s ease-out;
+}
+/* Curtain effect */
+.loaded .loader-section.section-left {
+  transform: translateX(-101%);
+  transition: 0.7s 0.3s all cubic-bezier(0.1, 0.1, 0.1, 1.000);
+}
+.loaded .loader-section.section-right {
+  transform: translateX(101%);
+  transition: 0.7s 0.3s all cubic-bezier(0.1, 0.1, 0.1, 1.000);
+}
+/* Animation of the preloader */
+@keyframes spinner {
+to {
+	transform: rotateZ(360deg);
+}}
+/* Animation of letters loading from the preloader */
+@keyframes characters {
+  0%,
+  75%,
+  100% {
+ opacity: 0;
+ transform: rotateY(-90deg);
+  }
+  25%,
+  50% {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }}
+
+
+
+  
+/* Laptop size back (laptop, tablet, cell phone) */
+@media screen and (max-width: 767px) {
+	/* Preloader */
+	/* Spinner Loading */	
+	.container-preloader .animation-preloader .spinner {
+	height: 8em;
+	width: 8em;
+	}
+	/* Text Loading */
+	.container-preloader .animation-preloader .txt-loading {
+	  font: bold 3.5em 'Montserrat', sans-serif;
+	}}
+@media screen and (max-width: 500px) {
+	/* Prelaoder */
+	/* Spinner Loading */
+	.container-preloader .animation-preloader .spinner {
+	height: 7em;
+	width: 7em;
+	}
+	/*Loading text */
+	.container-preloader .animation-preloader .txt-loading {
+	  font: bold 2em 'Montserrat', sans-serif;
+	}}
+.origin{text-decoration:none;
+font-size:45px;}
+
+#preloader{
+
+  background: rgb(27, 153, 195) url(images/download\ \(2\).gif) no-repeat center center ;
+  background-size: 1500px;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  z-index: 100;
+
+
+
+
+}
